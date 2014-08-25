@@ -152,6 +152,8 @@ self : let callPackage = x : y : modifyPrio (newScope self x y); in
 
   aesonUtils = callPackage ../development/libraries/haskell/aeson-utils {};
 
+  AgdaCategories = callPackage ../development/libraries/agda/categories {};
+
   algebra = callPackage ../development/libraries/haskell/algebra {};
 
   alsaCore = callPackage ../development/libraries/haskell/alsa-core {};

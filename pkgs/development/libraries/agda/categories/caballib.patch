@@ -1,0 +1,42 @@
+From 4384851e8ec559589d7d41b73af4dc0cd92fc20a Mon Sep 17 00:00:00 2001
+From: Mateusz Kowalczyk <fuuzetsu@fuuzetsu.co.uk>
+Date: Mon, 25 Aug 2014 03:30:22 +0100
+Subject: [PATCH] Please cabal builder
+
+---
+ Bottom.hs        |  2 ++
+ categories.cabal | 12 ++++++++++++
+ 2 files changed, 14 insertions(+)
+ create mode 100644 Bottom.hs
+ create mode 100644 categories.cabal
+
+diff --git a/Bottom.hs b/Bottom.hs
+new file mode 100644
+index 0000000..44edf24
+--- /dev/null
++++ b/Bottom.hs
+@@ -0,0 +1,2 @@
++-- | Dummy module to please cabal.
++module Bottom where
+diff --git a/categories.cabal b/categories.cabal
+new file mode 100644
+index 0000000..280e887
+--- /dev/null
++++ b/categories.cabal
+@@ -0,0 +1,12 @@
++name:            categories
++version:         0.0.0.0
++cabal-version:   >= 1.8
++build-type:      Simple
++description:     Categories library.
++
++library
++  hs-source-dirs:   .
++  exposed-modules:  Bottom
++  build-depends:    base >= 4.2 && < 4.8,
++                    filemanip == 0.3.*,
++                    filepath >= 1.1 && < 1.4
+\ No newline at end of file
+-- 
+2.1.0
+
