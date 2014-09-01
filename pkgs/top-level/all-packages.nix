@@ -6539,6 +6539,8 @@ let
     ghcWithPackages = haskellPackages.ghcWithPackages;
   };
 
+  AgdaCategories = callPackage ../development/libraries/agda/categories { };
+
   ### DEVELOPMENT / LIBRARIES / JAVA
 
   atermjava = callPackage ../development/libraries/java/aterm {
