@@ -38,6 +38,8 @@ self: super: {
   # $ hoogle server
   hoogleLocal = { packages ? [] }: self.callPackage ./hoogle.nix { inherit packages; };
 
+  acme-cutegirl = overrideCabal super.acme-cutegirl (drv: { enableSeparateLibOutput = true; });
+
   # Break infinite recursions.
   clock = dontCheck super.clock;
   Dust-crypto = dontCheck super.Dust-crypto;

@@ -57,6 +57,7 @@
 , enableSeparateDocOutput ? doHaddock
 , enableSeparateBinOutput ? isExecutable
 , outputsToInstall ? []
+, enableSeparateLibOutput ? false
 } @ args:
 
 assert editedCabalFile != null -> revision != null;
@@ -93,6 +94,7 @@ let
                    '';
 
   hasActiveLibrary = isLibrary && (enableStaticLibraries || enableSharedLibraries || enableLibraryProfiling);
+  separateLib = enableSeparateLibOutput && hasActiveLibrary;
 
   # We cannot enable -j<n> parallelism for libraries because GHC is far more
   # likely to generate a non-determistic library ID in that case. Further
@@ -111,12 +113,18 @@ let
     stdenv.lib.optionalString isCross (" " + stdenv.lib.concatStringsSep " " crossCabalFlags);
 
   defaultConfigureFlags = [
+<<<<<<< HEAD
     "--verbose" "--prefix=$out" "--libdir=\\$prefix/lib/\\$compiler" "--libsubdir=\\$pkgid"
     # Binary directory has to be $bin/bin instead of just $bin: this
     # is so that the package is added to the PATH when it's used as a
     # build input. Sadly mkDerivation won't add inputs that don't have
     # bin subdirectory.
     (optionalString enableSeparateBinOutput "--bindir=$bin/bin")
+=======
+    "--verbose" "--prefix=$out"
+    (if separateLib then "--libdir=$lib" else "--libdir=\\$prefix/lib/\\$compiler")
+    "--libsubdir=\\$pkgid"
+>>>>>>> 4dd6e12826... separate lib
     (optionalString enableSeparateDataOutput "--datadir=$data/share/${ghc.name}")
     (optionalString enableSeparateDocOutput "--docdir=$doc/share/doc")
     "--with-gcc=$CC" # Clang won't work without that extra information.
@@ -185,7 +193,11 @@ assert allPkgconfigDepends != [] -> pkgconfig != null;
 stdenv.mkDerivation ({
   name = "${pname}-${version}";
 
+<<<<<<< HEAD
   outputs = if (args ? outputs) then args.outputs else ([ "out" ] ++ (optional enableSeparateDataOutput "data") ++ (optional enableSeparateDocOutput "doc") ++ (optional enableSeparateBinOutput "bin"));
+=======
+  outputs = if (args ? outputs) then args.outputs else ([ "out" ] ++ (optional enableSeparateDataOutput "data") ++ (optional enableSeparateDocOutput "doc") ++ (optional separateLib "lib"));
+>>>>>>> 4dd6e12826... separate lib
   setOutputFlags = false;
 
   pos = builtins.unsafeGetAttrPos "pname" args;
