@@ -16,6 +16,7 @@ buildPythonPackage rec {
     sha256 = "1w502i5h8xaqf03g6h95h4vs1wqfv6kg925dn63phrwmg1hfz2xx";
   };
 
+  doCheck = false;
   checkPhase = "HOME=. py.test";
   checkInputs = [ pytest configparser ];
 
